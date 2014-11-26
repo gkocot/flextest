@@ -21,10 +21,15 @@ input:
     ;
 
 line:
-    | INT '+' INT '=' INT   { std::cout << line++ << ": " << $1 << "+" << $3 << "=" << $5 << ($1 + $3 == $5 ? " OK" : " ERROR") << std::endl; }
+    '\n'
+    | exp '+' exp '=' exp   { std::cout << line++ << ": " << $1 << "+" << $3 << "=" << $5 << ($1 + $3 == $5 ? " OK" : " ERROR") << std::endl; }
+    | exp '-' exp '=' exp   { std::cout << line++ << ": " << $1 << "-" << $3 << "=" << $5 << ($1 - $3 == $5 ? " OK" : " ERROR") << std::endl; }
     ;
     
-
+exp:
+    INT         { $$ = $1; }
+    | '-' INT   { $$ = -$2; }
+    ;
 %%
 
 void yyerror(const char *s) {
